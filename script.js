@@ -1,12 +1,42 @@
 const container = document.querySelector("#container");
+const button = document.querySelector('#button');
 
-let columns = 16;
-let rows = 16;
+let size = 16;
 
-container.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
-container.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+function createGrid(side){
+    container.style.gridTemplateColumns = `repeat(${side}, 1fr)`;
+    container.style.gridTemplateRows = `repeat(${side}, 1fr)`;
+}
 
-    for (let i = 0; i < columns * rows; i++){
+function createGridSquares(side){
+    for (let i = 0; i < side * side; i++){
         const div = document.createElement('div');
-        container.appendChild('div');
+        div.classList.add('grid');
+        div.addEventListener('mouseenter', () => {
+            div.classList.add('hover');
+        })
+        container.appendChild(div);
     }
+}
+
+button.addEventListener('click', () => {
+
+    const divs = document.querySelectorAll('.grid');
+    let gridSize;
+    
+    do {
+        gridSize = prompt("Enter the size of the grid:");
+    } while(gridSize <= 0 || gridSize > 75);
+
+    if (gridSize != null && gridSize <= 75){
+        for (let i = 0; i < divs.length; i++){
+            divs[i].remove();
+        }
+        createGrid(gridSize);
+        createGridSquares(gridSize);
+    }
+
+});
+
+createGrid(size);
+createGridSquares(size);
